@@ -127,5 +127,23 @@ class MeuGrafo(GrafoListaAdjacenciaNaoDirecionado):
             return False
         return True
 
-    def BFS(self, V):
-        nodes_visitados = []
+    def bfs(self, V=''):
+
+        grafo = MeuGrafo()
+        arestas_nao_visitadas = []
+        inicio = None
+
+        for aresta in self.arestas:
+            arestas_nao_visitadas.append(aresta)
+
+        for aresta in self.arestas:
+            if aresta.v1.rotulo == V:
+                inicio = aresta.v1
+                break
+            if aresta.v2.rotulo == V:
+                inicio = aresta.v2
+                break
+
+        print(inicio.rotulo)
+
+        return arestas_nao_visitadas
