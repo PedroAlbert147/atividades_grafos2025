@@ -126,3 +126,6 @@ class MeuGrafo(GrafoListaAdjacenciaNaoDirecionado):
         if self.vertices_nao_adjacentes():
             return False
         return True
+
+    def BFS(self, V):
+        nodes_visitados = []
