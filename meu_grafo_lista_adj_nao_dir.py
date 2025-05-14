@@ -130,20 +130,14 @@ class MeuGrafo(GrafoListaAdjacenciaNaoDirecionado):
     def bfs(self, V=''):
 
         grafo = MeuGrafo()
-        arestas_nao_visitadas = []
+        arestas_nao_visitadas_restantes = len(self.arestas)
+        vertice_visitado = []
         inicio = None
 
         for aresta in self.arestas:
-            arestas_nao_visitadas.append(aresta)
+            break
 
-        for aresta in self.arestas:
-            if aresta.v1.rotulo == V:
-                inicio = aresta.v1
-                break
-            if aresta.v2.rotulo == V:
-                inicio = aresta.v2
-                break
 
-        print(inicio.rotulo)
+        print(arestas_nao_visitadas_restantes)
 
-        return arestas_nao_visitadas
+        return arestas_nao_visitadas_restantes
