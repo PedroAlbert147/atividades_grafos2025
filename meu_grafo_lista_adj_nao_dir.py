@@ -127,23 +127,81 @@ class MeuGrafo(GrafoListaAdjacenciaNaoDirecionado):
             return False
         return True
 
-    def bfs(self, V=''):
+    def dfs(self, V=''):
+        grafoDFS = []
+        verticeAtual = V
+        arestasFinais = []
+        verticesNavegados = []
+        arestasNavegadas = []
+        arestasOpcoes = []
+        backtrack = 0
+        direcao = "in"
 
-        grafo = MeuGrafo()
-        arestas_nao_visitadas = []
-        inicio = None
+        while len(verticesNavegados) < len(self.vertices):
+            print(arestasFinais)
+            if direcao == "in":
+                print("direção: in")
+            else:
+                print("direcao: out  backtrack:", (len(verticesNavegados)-1) - backtrack)
+            if verticeAtual not in verticesNavegados:
+                verticesNavegados.append(verticeAtual)
+            if direcao == "in":
+                arestasOpcoes = self.arestas_sobre_vertice(verticeAtual)
+                arestasNovas = False
+                for arestaAtual in arestasOpcoes:
+                    if arestaAtual not in arestasNavegadas:
+                        arestaAtual = self.get_aresta(arestaAtual)
+                        if arestaAtual.v1.rotulo == verticeAtual:
+                            arestasNavegadas.append(arestaAtual.rotulo)
+                            if arestaAtual.v2.rotulo not in verticesNavegados:
+                                arestasFinais.append(arestaAtual.rotulo)
+                                verticeAtual = arestaAtual.v2.rotulo
+                                arestasNovas = True
+                            break
+                        elif arestaAtual.v2.rotulo == verticeAtual:
+                            arestasNavegadas.append(arestaAtual.rotulo)
+                            if arestaAtual.v1.rotulo not in verticesNavegados:
+                                arestasFinais.append(arestaAtual.rotulo)
+                                verticeAtual = arestaAtual.v1.rotulo
+                                arestasNovas = True
+                            break
+                if arestasNovas == False:
+                    direcao = "out"
+                    backtrack = 1
+            if direcao == "out":
+                verticeAtual = verticesNavegados[(len(verticesNavegados)-1) - backtrack]
+                arestasOpcoes = self.arestas_sobre_vertice(verticeAtual)
+                arestasNovas = False
+                for arestaAtual in arestasOpcoes:
+                    if arestaAtual not in arestasNavegadas:
+                        arestaAtual = self.get_aresta(arestaAtual)
+                        if arestaAtual.v1.rotulo == verticeAtual:
+                            arestasNavegadas.append(arestaAtual.rotulo)
+                            if arestaAtual.v2.rotulo not in verticesNavegados:
+                                arestasFinais.append(arestaAtual.rotulo)
+                                verticeAtual = arestaAtual.v2.rotulo
+                                arestasNovas = True
+                            break
+                        elif arestaAtual.v2.rotulo == verticeAtual:
+                            arestasNavegadas.append(arestaAtual.rotulo)
+                            if arestaAtual.v1.rotulo not in verticesNavegados:
+                                arestasFinais.append(arestaAtual.rotulo)
+                                verticeAtual = arestaAtual.v1.rotulo
+                                arestasNovas = True
+                            break
+                if arestasNovas:
+                    direcao = "in"
+                else:
+                    backtrack = backtrack + 1
 
-        for aresta in self.arestas:
-            arestas_nao_visitadas.append(aresta)
+        print("")
+        print("")
+        print("")
+        print(self)
 
-        for aresta in self.arestas:
-            if aresta.v1.rotulo == V:
-                inicio = aresta.v1
-                break
-            if aresta.v2.rotulo == V:
-                inicio = aresta.v2
-                break
+        print("")
+        print("meu grafo:")
+        for x in range(len(arestasFinais)):
+            print(self.get_aresta(arestasFinais[x]))
 
-        print(inicio.rotulo)
 
-        return arestas_nao_visitadas
